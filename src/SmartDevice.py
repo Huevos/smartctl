@@ -57,7 +57,7 @@ class SmartDevice(Screen):
                 "blue":    self.startSelftest,
         }, -1)
         self["deviceinfo"] = List()
-        self["key_red"] = Label("Attribute")
+        self["key_red"] = Label("Attributes")
         self["key_green"] = Label()
         self["key_yellow"] = Label()
         self["key_blue"] = Label()
@@ -82,17 +82,17 @@ class SmartDevice(Screen):
         self['deviceinfo'].setList(deviceinfo)
         
         capabilities = self.smartinfo.getCapabilities()
-        if capabilities["self_tests_supported"]:
+        if "self_tests_supported" in capabilities and capabilities["self_tests_supported"]:
             self.hasSelftestsLog = True
-            self["key_green"].setText("Selbsttest-Ergebnisse")
+            self["key_green"].setText("Self-Test Results")
 
-        if capabilities["error_logging_supported"]:
+        if "error_logging_supported" in capabilities and capabilities["error_logging_supported"]:
             self.hasErrorLog = True
-            self["key_yellow"].setText("Errorlog auslesen")
+            self["key_yellow"].setText("Read error log")
 
-        if capabilities["poll_short_test"]:
+        if "poll_short_test" in capabilities and capabilities["poll_short_test"]:
             self.canSelftest = capabilities["poll_short_test"]
-            self["key_blue"].setText("Kurzer Selbsttest")
+            self["key_blue"].setText("Short self-test")
 
     def showAttributes(self):
         if self.smartinfo:
@@ -110,6 +110,6 @@ class SmartDevice(Screen):
 
     def startSelftest(self):
         if self.canSelftest:
-            msg = "Selbsttest wird gestartet; der Test dauert etwa %s Minuten. Danach kann er abgerufen werden." % (self.canSelftest,)
+            msg = "self-test started; the test takes about %s minutes" % (self.canSelftest,)
             self.session.open(MessageBox, msg, MessageBox.TYPE_INFO)
             self.smartinfo.startShortSelftest()

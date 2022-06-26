@@ -56,7 +56,7 @@ class SmartInfo(object):
             out = Helper.sub_process(cmd)
             attributes = Helper.json_loads(out)
 
-            if attributes:
+            if attributes and "ata_smart_attributes" in attributes:
                 table = attributes["ata_smart_attributes"]["table"]
                 self.attributes = []
                 for attr in table:
@@ -77,7 +77,7 @@ class SmartInfo(object):
                 selftests = Helper.json_loads(out)
                 logged = selftests["ata_smart_self_test_log"]["standard"]["table"]
                 for item in logged:
-                    self.selftests.append( (item["type"]["string"].encode("ascii"), item["status"]["string"].encode("ascii") ) )
+                    self.selftests.append((item["type"]["string"].encode("ascii").decode(), item["status"]["string"].encode("ascii").decode()))
             except:
                 pass
     
@@ -89,7 +89,7 @@ class SmartInfo(object):
                 selftests = Helper.json_loads(out)
                 logged = selftests["ata_smart_error_log"]["summary"]["table"]
                 for item in logged:
-                    self.selftests.append( (item["type"]["string"].encode("ascii"), item["status"]["string"].encode("ascii") ) )
+                    self.selftests.append((item["type"]["string"].encode("ascii").decode(), item["status"]["string"].encode("ascii").decode()))
             except:
                 pass
     

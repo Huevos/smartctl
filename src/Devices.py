@@ -25,7 +25,7 @@ def DevicesEntryComponent(device):
         device,
         MultiContentEntryText(pos=(x, y), size=(w, h), font=0, text=device["name"]),
         MultiContentEntryText(pos=(x1, y1), size=(w1, h1), font=1, text=device["model"]),
-        MultiContentEntryPixmapAlphaTest(pos=(x2, y2), size=(w2, h2), options = BT_SCALE, png = png)
+        MultiContentEntryPixmapAlphaTest(pos=(x2, y2), size=(w2, h2), flags=BT_SCALE, png=png)
     ]
 
 class DevicesList(MenuList):
